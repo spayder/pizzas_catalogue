@@ -3,13 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Ingredient;
-use App\Pizza;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-class PizzasController extends Controller
+class IngredientsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,9 +17,9 @@ class PizzasController extends Controller
      */
     public function index()
     {
-        $pizzas = Pizza::calculateTotal(Pizza::all());
+        $ingredients = Ingredient::all();
 
-        return view('pizzas.index', compact('pizzas'));
+        return view('ingredients.index', compact('ingredients'));
     }
 
     /**
@@ -30,9 +29,7 @@ class PizzasController extends Controller
      */
     public function create()
     {
-        $ingredients = Ingredient::all();
-
-        return view('pizzas.create', compact('ingredients'));
+        return view('ingredients.create');
     }
 
     /**
@@ -43,12 +40,9 @@ class PizzasController extends Controller
      */
     public function store(Request $request)
     {
-        $input = $request->all();
+        Ingredient::create($request->all());
 
-        $pizza = Pizza::create($input);
-        $pizza->ingredients()->attach($input['ingredients']);
-
-        return redirect('pizzas');
+        return redirect('ingredients');
     }
 
     /**

@@ -18,4 +18,9 @@ class Ingredient extends Model
     {
         return $this->belongsToMany('App\Pizza');
     }
+
+    public function setTotalAttribute($data)
+    {
+        $this->attributes['total'] = array_sum($data['price']);
+    }
 }
